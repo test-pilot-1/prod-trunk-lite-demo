@@ -1,0 +1,18 @@
+name: Deploy production
+on:
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: Commit to deploy
+        required: false
+permissions:
+  contents: read
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.sha || github.sha }}
+      - run: echo "Deploying $(git rev-parse HEAD) to production"

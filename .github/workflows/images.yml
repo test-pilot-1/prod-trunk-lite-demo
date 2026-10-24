@@ -1,0 +1,13 @@
+name: Images
+# Container images are built only after a merge to main (like lanesync/lanesync): never on pull requests.
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t prod-trunk-lite-demo:${{ github.sha }} .
